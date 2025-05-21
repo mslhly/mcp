@@ -1,0 +1,63 @@
+server:
+  port: 8081
+
+logging:
+  level:
+    com.coolawchain: debug
+  pattern: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  console:
+    enabled: true
+
+
+spring:
+  ai:
+    mcp:
+      server:
+        name: spring-ai-mcp-weather
+        version: 0.0.1
+      client:
+        enabled: true
+        name: coolawchain-client
+        version: 1.0.0
+        initialized: true
+        request-timeout: 20s
+        type: sync
+        toolcallback:
+          enabled: false
+    model:
+      embedding: ollama
+      chat: ollama
+    ollama:
+      base-url: http://127.0.0.1:11434
+      init:
+        pull-model-strategy: never
+      embedding:
+        options:
+          model: qwen3:8b-fp16
+          num-g-p-u: 1
+          temperature: 0.9
+          top_k: 40
+          top_p: 0.95
+          min-p: 0.1
+          repeat-last-n: 64
+      chat:
+        options:
+          model: qwen3:8b-fp16
+          temperature: 0.9
+#  datasource:
+#    # type: com.alibaba.druid.pool.DruidDataSource
+#    driver-class-name: com.kingbase8.Driver
+#    url: jdbc:${DB_PROTO:kingbase8}://${DB_HOST:172.16.8.59}:${DB_PORT:54321}/${DB_NAME:szzf-xt-zfw}?${DB_PARAM:currentSchema=szzf-xt&characterEncoding=utf8}
+#    username: ${DB_USER:coolaw}
+#    password: ${DB_PWD:Pass@word(2024}
+#    datasource:
+#      # type: com.alibaba.druid.pool.DruidDataSource
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      url: jdbc:p6spy:${DB_PROTO:mysql}://${DB_HOST:172.16.4.163}:${DB_PORT:13307}/${DB_NAME:jixian}?${DB_PARAM:useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai}
+#      username: ${DB_USER:root}
+#      password: ${DB_PWD:Pass@word(32!}
+
+
+# Using spring-ai-starter-mcp-server-webmvc
+
+

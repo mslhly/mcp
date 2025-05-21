@@ -1,0 +1,66 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.0-SNAPSHOT'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.coolaw'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
+	maven {
+		name = 'Central Portal Snapshots'
+		url = 'https://central.sonatype.com/repository/maven-snapshots/'
+	}
+}
+
+ext {
+	set('springAiVersion', "1.0.0-RC1")
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+
+
+	implementation platform("org.springframework.ai:spring-ai-bom:1.0.0-SNAPSHOT")
+	implementation 'org.springframework.ai:spring-ai-starter-mcp-client'
+	implementation 'org.springframework.ai:spring-ai-starter-mcp-client-webflux'
+	implementation 'org.springframework.ai:spring-ai-starter-mcp-server-webmvc'
+	implementation 'org.springframework.ai:spring-ai-starter-mcp-server'
+	implementation 'org.springframework.ai:spring-ai-starter-model-ollama'
+	implementation 'org.springframework.ai:spring-ai-spring-boot-testcontainers'
+	implementation 'org.springframework.ai:spring-ai-ollama'
+	implementation 'com.logaritex.mcp:spring-ai-mcp-annotations:0.1.0'
+
+//	implementation platform("org.springframework:spring-web")
+
+	implementation 'io.projectreactor:reactor-core'
+	implementation 'io.projectreactor:reactor-test'
+	implementation 'io.modelcontextprotocol.sdk:mcp:0.11.0-SNAPSHOT'
+
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
